@@ -1,96 +1,154 @@
 ---
-// Hero.astro — macrophage image with traced, clickable hotspots.
-// Layer 1: the image (placeholder for now).
-// Layer 2: an SVG overlay, same coordinate space.
-// Layer 3: hotspots = <a>-wrapped traced shapes. Hover shows a panel; click navigates.
+// Hero.astro — media-in-mask hotspots.
+// Each cell's traced `path` is used by: SVG outline, CSS clip-path, and JS lookup.
+// Hero is a FIXED pixel box so SVG coords and CSS clip-path coords agree.
+import "../styles/tokens.css";
 
-// Each hotspot's data lives here, so the markup stays clean and you edit
-// cells in one place. Trace points come from your real image later.
+const W = 700, H = 420; // hero pixel dimensions — set to your image's later
+
 const hotspots = [
   {
     id: "m1",
     label: "M1 — pro-inflammatory",
-    blurb: "Classically activated macrophage. Drives early inflammation.",
     href: "/writing/first-post",
-    // A traced outline as an SVG path (placeholder shape for now).
     path: "M180,140 Q150,110 170,90 Q210,70 250,95 Q280,130 255,170 Q220,200 185,180 Z",
+    media: [
+      { type: "video", label: "live",     src: "/cells/m1/live.mp4" },
+      { type: "image", label: "IF merge", src: "/cells/m1/if-merge.jpg" },
+      { type: "image", label: "DAPI",     src: "/cells/m1/dapi.jpg" },
+      { type: "image", label: "iNOS",     src: "/cells/m1/inos.jpg" },
+    ],
   },
   {
     id: "m2",
     label: "M2 — tissue repair",
-    blurb: "Alternatively activated. Associated with resolution and remodeling.",
     href: "/writing/first-post",
     path: "M420,260 Q390,225 415,200 Q460,180 500,210 Q525,250 500,290 Q455,320 425,295 Z",
+    media: [
+      { type: "video", label: "live",     src: "/cells/m2/live.mp4" },
+      { type: "image", label: "IF merge", src: "/cells/m2/if-merge.jpg" },
+      { type: "image", label: "CD206",    src: "/cells/m2/cd206.jpg" },
+    ],
   },
 ];
 ---
 
 <div class="hero">
-  <!-- The image + overlay share one coordinate box via viewBox.
-       Set viewBox to your image's pixel dimensions when you swap it in. -->
-  <svg class="hero-svg" viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg"
-       role="img" aria-label="Interactive macrophage field">
+  <div class="stage" style={`width:${W}px; height:${H}px;`}>
 
-    <!-- LAYER 1: image. Placeholder rect now; swap for <image> later. -->
-    <rect width="700" height="420" fill="var(--hover-bg)" />
-    <text x="350" y="210" text-anchor="middle" fill="var(--fg-alt)"
-          font-family="inherit" font-size="14">placeholder — your macrophage.jpg goes here</text>
-    <!-- When ready, replace the rect+text above with:
-         <image href="/macrophage.jpg" width="700" height="420" /> -->
+    <!-- LAYER 1: base image (placeholder) -->
+    <div class="base-img"></div>
 
-    <!-- LAYER 3: hotspots, one per cell. -->
+    <!-- LAYER 2: one clipped media container per cell, hidden until hover -->
     {hotspots.map((h) => (
-      <a href={h.href} class="hotspot" data-label={h.label} data-blurb={h.blurb}>
-        <path d={h.path} class="hotspot-shape" />
-      </a>
+      <div class="cell-media" id={`media-${h.id}`}
+           style={`clip-path: path('${h.path}'); -webkit-clip-path: path('${h.path}');`}>
+      </div>
     ))}
-  </svg>
 
-  <!-- The hover panel. Updated by the script below. -->
+    <!-- LAYER 3: SVG outlines (the glow/border) + click targets -->
+    <svg class="outlines" viewBox={`0 0 ${W} ${H}`} xmlns="http://www.w3.org/2000/svg">
+      {hotspots.map((h) => (
+        <a href={h.href} class="hotspot"
+           data-id={h.id} data-label={h.label} data-media={JSON.stringify(h.media)}>
+          <path d={h.path} class="outline-shape" />
+        </a>
+      ))}
+    </svg>
+  </div>
+
+  <!-- LAYER 4: text-only side panel -->
   <aside class="hero-panel">
     <p class="panel-hint">// hover a cell</p>
     <p id="panel-label" class="panel-label">Macrophage field</p>
-    <p id="panel-blurb" class="panel-blurb">Hover to inspect, click to read more.</p>
+    <p id="panel-blurb" class="panel-blurb">Hover a cell to inspect · click a marker to swap.</p>
   </aside>
 </div>
 
 <style>
-  .hero { display: flex; gap: 2ch; flex-wrap: wrap; align-items: stretch;
-          border: var(--border-thickness) solid var(--fg); margin: 1.5rem 0; }
-  .hero-svg { flex: 2; min-width: 280px; display: block; width: 100%; height: auto;
-              border-right: var(--border-thickness) solid var(--fg); }
-  .hero-panel { flex: 1; min-width: 180px; padding: 1rem 1ch; }
-  .panel-hint  { color: var(--fg-alt); font-size: 0.7rem; text-transform: uppercase;
-                 letter-spacing: 0.06em; margin: 0 0 0.5rem; }
-  .panel-label { font-weight: 500; margin: 0 0 0.4rem; }
-  .panel-blurb { color: var(--fg-alt); font-size: 0.85rem; margin: 0; }
+  .hero { display:flex; gap:2ch; flex-wrap:wrap; align-items:flex-start;
+          border: var(--border-thickness) solid var(--fg); margin:1.5rem 0; padding:1ch; }
 
-  /* Hotspot styling — the glow lives here, pure CSS. */
-  .hotspot-shape {
-    fill: transparent;
-    stroke: var(--accent);
-    stroke-width: 2;
-    opacity: 0.35;
-    transition: opacity 0.2s ease, fill 0.2s ease;
-    cursor: pointer;
+  /* fixed-size stacking context */
+  .stage { position:relative; flex:none; }
+  .base-img { position:absolute; inset:0; background:var(--hover-bg);
+              /* placeholder fill; real: background:url('/macrophage.jpg') center/cover; */ }
+
+  /* clipped media — fills the stage, but clip-path shows only the cell shape */
+  .cell-media { position:absolute; inset:0; opacity:0; transition:opacity .25s ease;
+                pointer-events:none; }
+  .cell-media.show { opacity:1; }
+  .cell-media img, .cell-media video { width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* SVG outline layer sits on top, but only the paths catch the mouse */
+  .outlines { position:absolute; inset:0; width:100%; height:100%; }
+  .outline-shape {
+    fill: transparent; stroke: var(--accent); stroke-width:2; opacity:0.4;
+    transition: opacity .2s, stroke-width .2s, filter .2s; cursor:pointer;
   }
-  .hotspot:hover .hotspot-shape {
-    opacity: 1;
-    fill: var(--accent);
-    fill-opacity: 0.15;
-    /* the "glow" */
-    filter: drop-shadow(0 0 6px var(--accent));
+  /* glow on hover-in; settles to thin border via the .filled class JS adds */
+  .hotspot:hover .outline-shape {
+    opacity:1; stroke-width:3; filter: drop-shadow(0 0 6px var(--accent));
   }
+  .hotspot.filled .outline-shape {
+    stroke-width:1.5; filter:none; opacity:0.9;  /* settled thin border */
+  }
+
+  .hero-panel { flex:1; min-width:200px; padding:0.5rem 1ch; }
+  .panel-hint { color:var(--fg-alt); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; margin:0 0 0.5rem; }
+  .panel-label { font-weight:500; margin:0 0 0.4rem; }
+  .panel-blurb { color:var(--fg-alt); font-size:0.85rem; margin:0 0 0.6rem; }
+  .panel-thumbs { display:flex; gap:0.5ch; flex-wrap:wrap; }
+  .thumb { font-size:0.7rem; padding:0.1rem 0.6ch; cursor:pointer; font-family:inherit;
+           border:1px solid var(--fg-alt); color:var(--fg-alt); background:transparent; }
+  .thumb.active { border-color:var(--accent); color:var(--accent); }
 </style>
 
 <script>
-  // Browser-side: update the panel when a hotspot is hovered.
   const label = document.getElementById("panel-label");
   const blurb = document.getElementById("panel-blurb");
+
+  function makeMedia(item) {
+    if (item.type === "video") {
+      const v = document.createElement("video");
+      v.src = item.src; v.muted = true; v.loop = true;
+      v.autoplay = true; v.playsInline = true;
+      return v;
+    }
+    const img = document.createElement("img");
+    img.src = item.src; img.alt = item.label;
+    return img;
+  }
+
+  function activateCell(hotspot) {
+    let media;
+    try { media = JSON.parse(hotspot.getAttribute("data-media")); } catch { return; }
+    if (!media?.length) return;
+
+    const id = hotspot.getAttribute("data-id");
+    const container = document.getElementById("media-" + id);
+
+    // pick a random media item from this cell's set
+    const pick = media[Math.floor(Math.random() * media.length)];
+
+    container.replaceChildren(makeMedia(pick));
+    container.classList.add("show");
+    hotspot.classList.add("filled");
+
+    label.textContent = hotspot.getAttribute("data-label");
+    blurb.textContent = pick.label;   // name the marker/video currently shown
+  }
+
+  function clearCell(hotspot) {
+    const id = hotspot.getAttribute("data-id");
+    const container = document.getElementById("media-" + id);
+    container.classList.remove("show");
+    container.replaceChildren();       // stop video, free it
+    hotspot.classList.remove("filled");
+  }
+
   document.querySelectorAll(".hotspot").forEach((el) => {
-    el.addEventListener("mouseenter", () => {
-      label.textContent = el.getAttribute("data-label");
-      blurb.textContent = el.getAttribute("data-blurb");
-    });
+    el.addEventListener("mouseenter", () => activateCell(el));
+    el.addEventListener("mouseleave", () => clearCell(el));
   });
 </script>

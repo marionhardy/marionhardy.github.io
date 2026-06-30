@@ -1,0 +1,19 @@
+---
+import Base from "../layouts/Base.astro";
+import { getCollection } from "astro:content";
+const posts = await getCollection("writing");
+posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Base title="mhy — writing">
+  <h1>Writing</h1>
+  {posts.map((post) => (
+    <article style="padding: 0.8rem 0; border-bottom: 1px solid var(--fg-alt);">
+      <h2 style="margin: 0; font-size: 1rem;">{post.data.title}</h2>
+      <time style="color: var(--fg-alt); font-size: 0.85rem;">
+        {post.data.date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+      </time>
+      {post.data.tags && <div style="font-size: 0.8rem; color: var(--fg-alt);">{post.data.tags.join(", ")}</div>}
+    </article>
+  ))}
+</Base>

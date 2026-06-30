@@ -1,0 +1,96 @@
+---
+// Hero.astro — macrophage image with traced, clickable hotspots.
+// Layer 1: the image (placeholder for now).
+// Layer 2: an SVG overlay, same coordinate space.
+// Layer 3: hotspots = <a>-wrapped traced shapes. Hover shows a panel; click navigates.
+
+// Each hotspot's data lives here, so the markup stays clean and you edit
+// cells in one place. Trace points come from your real image later.
+const hotspots = [
+  {
+    id: "m1",
+    label: "M1 — pro-inflammatory",
+    blurb: "Classically activated macrophage. Drives early inflammation.",
+    href: "/writing/first-post",
+    // A traced outline as an SVG path (placeholder shape for now).
+    path: "M180,140 Q150,110 170,90 Q210,70 250,95 Q280,130 255,170 Q220,200 185,180 Z",
+  },
+  {
+    id: "m2",
+    label: "M2 — tissue repair",
+    blurb: "Alternatively activated. Associated with resolution and remodeling.",
+    href: "/writing/first-post",
+    path: "M420,260 Q390,225 415,200 Q460,180 500,210 Q525,250 500,290 Q455,320 425,295 Z",
+  },
+];
+---
+
+<div class="hero">
+  <!-- The image + overlay share one coordinate box via viewBox.
+       Set viewBox to your image's pixel dimensions when you swap it in. -->
+  <svg class="hero-svg" viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg"
+       role="img" aria-label="Interactive macrophage field">
+
+    <!-- LAYER 1: image. Placeholder rect now; swap for <image> later. -->
+    <rect width="700" height="420" fill="var(--hover-bg)" />
+    <text x="350" y="210" text-anchor="middle" fill="var(--fg-alt)"
+          font-family="inherit" font-size="14">placeholder — your macrophage.jpg goes here</text>
+    <!-- When ready, replace the rect+text above with:
+         <image href="/macrophage.jpg" width="700" height="420" /> -->
+
+    <!-- LAYER 3: hotspots, one per cell. -->
+    {hotspots.map((h) => (
+      <a href={h.href} class="hotspot" data-label={h.label} data-blurb={h.blurb}>
+        <path d={h.path} class="hotspot-shape" />
+      </a>
+    ))}
+  </svg>
+
+  <!-- The hover panel. Updated by the script below. -->
+  <aside class="hero-panel">
+    <p class="panel-hint">// hover a cell</p>
+    <p id="panel-label" class="panel-label">Macrophage field</p>
+    <p id="panel-blurb" class="panel-blurb">Hover to inspect, click to read more.</p>
+  </aside>
+</div>
+
+<style>
+  .hero { display: flex; gap: 2ch; flex-wrap: wrap; align-items: stretch;
+          border: var(--border-thickness) solid var(--fg); margin: 1.5rem 0; }
+  .hero-svg { flex: 2; min-width: 280px; display: block; width: 100%; height: auto;
+              border-right: var(--border-thickness) solid var(--fg); }
+  .hero-panel { flex: 1; min-width: 180px; padding: 1rem 1ch; }
+  .panel-hint  { color: var(--fg-alt); font-size: 0.7rem; text-transform: uppercase;
+                 letter-spacing: 0.06em; margin: 0 0 0.5rem; }
+  .panel-label { font-weight: 500; margin: 0 0 0.4rem; }
+  .panel-blurb { color: var(--fg-alt); font-size: 0.85rem; margin: 0; }
+
+  /* Hotspot styling — the glow lives here, pure CSS. */
+  .hotspot-shape {
+    fill: transparent;
+    stroke: var(--accent);
+    stroke-width: 2;
+    opacity: 0.35;
+    transition: opacity 0.2s ease, fill 0.2s ease;
+    cursor: pointer;
+  }
+  .hotspot:hover .hotspot-shape {
+    opacity: 1;
+    fill: var(--accent);
+    fill-opacity: 0.15;
+    /* the "glow" */
+    filter: drop-shadow(0 0 6px var(--accent));
+  }
+</style>
+
+<script>
+  // Browser-side: update the panel when a hotspot is hovered.
+  const label = document.getElementById("panel-label");
+  const blurb = document.getElementById("panel-blurb");
+  document.querySelectorAll(".hotspot").forEach((el) => {
+    el.addEventListener("mouseenter", () => {
+      label.textContent = el.getAttribute("data-label");
+      blurb.textContent = el.getAttribute("data-blurb");
+    });
+  });
+</script>

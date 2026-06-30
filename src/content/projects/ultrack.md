@@ -1,6 +1,7 @@
 ---  
-title: Tracking microglia along axons
+title: "Ultrack"
 status: "archived"
-summary: kjabhdjkewbqkj
-
+summary: "Macrophage tracking from brightfield images."
+stack: ["R", "imageJ"]
+link: "https://github.com/..."
 ---

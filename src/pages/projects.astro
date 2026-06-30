@@ -1,0 +1,21 @@
+---
+import Base from "../layouts/Base.astro";
+import { getCollection } from "astro:content";
+const projects = await getCollection("projects");
+projects.sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+
+<Base title="mhy — projects">
+  <h1>Projects</h1>
+  {projects.map((proj) => (
+    <article style="border-bottom: 1px solid var(--fg-alt); padding: 1rem 0;">
+      <h2 style="margin: 0;">
+        {proj.data.title}
+        <span style="font-size: 0.7rem; color: var(--fg-alt); border: 1px solid var(--fg-alt); padding: 0 0.5ch; margin-left: 1ch;">{proj.data.status}</span>
+      </h2>
+      <p style="color: var(--fg-alt); margin: 0.4rem 0;">{proj.data.summary}</p>
+      {proj.data.stack && <p style="font-size: 0.85rem;">{proj.data.stack.join(" · ")}</p>}
+      {proj.data.link && <a href={proj.data.link} style="color: var(--accent);">→ repo</a>}
+    </article>
+  ))}
+</Base>

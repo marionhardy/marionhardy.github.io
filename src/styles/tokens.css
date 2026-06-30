@@ -1,0 +1,59 @@
+/* ============================================================
+   DESIGN TOKENS — single source of truth for the whole site.
+   Light theme is the default; dark overrides below.
+   ============================================================ */
+
+:root {
+  /* Colour */
+  --bg:        #f4f3ee;   /* page background (warm off-white) */
+  --fg:        #1a1a1a;   /* primary text */
+  --fg-alt:    #6b6b63;   /* muted text: captions, labels */
+  --accent:    #b4471f;   /* links, active states (rust) */
+  --hover-bg:  #e6e5df;   /* subtle hover fill */
+
+  /* Structure */
+  --border-thickness: 2px;     /* table & frame border weight */
+  --line:             1.25rem; /* base line height — the vertical grid unit */
+}
+
+/* Dark theme — applied when <html data-theme="dark"> is set,
+   OR when the OS prefers dark and no explicit choice was made. */
+
+:root[data-theme="dark"] {
+  --bg:        #0c0c0c;
+  --fg:        #e8e8e3;
+  --fg-alt:    #8a8a82;
+  --accent:    #d8633b;
+  --hover-bg:  #1c1c1c;
+}
+
+/* If the visitor has NOT made an explicit choice, follow their OS.
+   We detect "no explicit choice" by the absence of data-theme. */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:        #0c0c0c;
+    --fg:        #e8e8e3;
+    --fg-alt:    #8a8a82;
+    --accent:    #d8633b;
+    --hover-bg:  #1c1c1c;
+  }
+}
+
+/* ============================================================
+   BASE — apply the tokens. Everything inherits from here.
+   ============================================================ */
+
+html {
+  font-family: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+  font-size: 16px;                 /* the rem reference */
+  line-height: var(--line);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  /* smooth the colour change when toggling */
+  transition: background 0.2s ease, color 0.2s ease;
+}

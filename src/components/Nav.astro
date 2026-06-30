@@ -1,0 +1,40 @@
+---
+// Nav.astro — site navigation plus the theme toggle button.
+---
+
+<nav style="display:flex; justify-content:space-between; align-items:baseline;
+            border-bottom: var(--border-thickness) solid var(--fg);
+            padding-bottom: 0.5rem; margin-bottom: 1.5rem;">
+
+  <!-- Left: site links -->
+  <div style="display:flex; gap:2ch;">
+    <a href="/"             style="color:var(--fg); text-decoration:none;">home</a>
+    <a href="/publications" style="color:var(--fg); text-decoration:none;">publications</a>
+    <a href="/projects"     style="color:var(--fg); text-decoration:none;">projects</a>
+  </div>
+
+  <!-- Right: the theme toggle -->
+  <button id="theme-toggle"
+          style="font-family:inherit; font-size:0.85rem; cursor:pointer;
+                 background:transparent; color:var(--fg);
+                 border: var(--border-thickness) solid var(--fg);
+                 padding: 0.2rem 1ch;">
+    theme
+  </button>
+</nav>
+
+<!-- The toggle's click behaviour. Runs in the browser. -->
+<script>
+  const btn = document.getElementById("theme-toggle");
+  btn?.addEventListener("click", () => {
+    const root = document.documentElement;
+    // Figure out the current effective theme.
+    const current =
+      root.getAttribute("data-theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    // Flip it.
+    const next = current === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next); // remember the choice
+  });
+</script>

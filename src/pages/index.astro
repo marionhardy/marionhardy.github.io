@@ -1,0 +1,15 @@
+---
+// The homepage. It no longer knows about <html>, <head>, or styles —
+// the layout handles all of that. This file is now pure content.
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="mhy — home">
+  <h1>Your Name</h1>
+  <p style="color: var(--fg-alt);">
+    Cell biologist with a computer-science background.
+  </p>
+  <p>
+    A <a href="#" style="color: var(--accent);">styled link</a> in the accent colour.
+  </p>
+</Base>

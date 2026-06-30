@@ -1,0 +1,41 @@
+---
+// publications.astro — queries the publications collection and lists it.
+import Base from "../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+// getCollection returns ALL entries, each validated against the schema.
+const pubs = await getCollection("publications");
+
+// Sort newest-first by year (descending).
+pubs.sort((a, b) => b.data.year - a.data.year);
+---
+
+<Base title="mhy — publications">
+  <h1>Publications</h1>
+
+  <table style="width:100%; border-collapse:collapse; margin-top:1rem;">
+    <thead>
+      <tr>
+        <th style="text-align:left; border:var(--border-thickness) solid var(--fg); padding:0.4rem 1ch; color:var(--fg-alt);">Year</th>
+        <th style="text-align:left; border:var(--border-thickness) solid var(--fg); padding:0.4rem 1ch; color:var(--fg-alt);">Title</th>
+        <th style="text-align:left; border:var(--border-thickness) solid var(--fg); padding:0.4rem 1ch; color:var(--fg-alt);">Links</th>
+      </tr>
+    </thead>
+    <tbody>
+      {pubs.map((p) => (
+        <tr>
+          <td style="border:var(--border-thickness) solid var(--fg); padding:0.4rem 1ch; vertical-align:top;">{p.data.year}</td>
+          <td style="border:var(--border-thickness) solid var(--fg); padding:0.4rem 1ch; vertical-align:top;">
+            {p.data.title}
+            <div style="color:var(--fg-alt); font-size:0.85rem;">{p.data.authors} · {p.data.venue}</div>
+          </td>
+          <td style="border:var(--border-thickness) solid var(--fg); padding:0.4rem 1ch; vertical-align:top; white-space:nowrap;">
+            <a href={p.data.doi} style="color:var(--accent);">doi</a>
+            {p.data.pdf && <> · <a href={p.data.pdf} style="color:var(--accent);">pdf</a></>}
+            {p.data.code && <> · <a href={p.data.code} style="color:var(--accent);">code</a></>}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</Base>

@@ -1,0 +1,38 @@
+---
+// Base.astro — the shared shell every page wraps itself in.
+// Props let a page pass in values; here, the page title.
+// `Astro.props` is how a component receives values from its caller.
+// We pull out `title`, with a fallback default.
+import "../styles/tokens.css";
+import Nav from "../components/Nav.astro";
+const { title = "mhy" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+
+    <!-- Runs BEFORE the page paints, to set the saved theme and avoid a flash.
+         is:inline tells Astro to ship this script as-is, run immediately. -->
+    <script is:inline>
+      (function () {
+        const saved = localStorage.getItem("theme");
+        if (saved === "dark" || saved === "light") {
+          document.documentElement.setAttribute("data-theme", saved);
+        }
+        // If nothing saved, we set nothing — CSS falls back to OS preference.
+      })();
+    </script>
+
+  </head>
+  <body>
+    <main style="max-width: 80ch; margin: 0 auto; padding: 2rem 2ch;">
+        <Nav />
+        <slot />
+    </main>
+  </body>
+</html>
+

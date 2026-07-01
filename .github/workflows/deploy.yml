@@ -1,6 +1,6 @@
 # Build the Astro site and deploy it to GitHub Pages on every push to main.
 name: Deploy to GitHub Pages
-
+ 
 on:
   push:
     branches: [main]   # deploy whenever you push to main
@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
       - name: Install dependencies
         run: npm ci          # clean install from package-lock.json
       - name: Build

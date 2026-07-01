@@ -1,5 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  site: 'https://marionhardy.github.io',
+  // No `base` needed — root deploy since the repo is username.github.io
+});

@@ -9,13 +9,14 @@ import { glob } from "astro/loaders";
 const publications = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/publications" }),
   schema: z.object({
-    title:   z.string(),
-    authors: z.string(),
-    year:    z.number(),
-    venue:   z.string(),
-    doi:     z.string().url(),          // must be a valid URL
-    pdf:     z.string().url().optional(),  // optional link
-    code:    z.string().url().optional(),  // optional link
+    title:        z.string(),
+    authors:      z.string(),
+    year:         z.number(),
+    venue:        z.string(),
+    doi:          z.string().url(),          // must be a valid URL
+    pdf:          z.string().url().optional(),
+    code:         z.string().url().optional(),
+    collaborator: z.string().optional(),     // AI version, per convention
   }),
 });
 
@@ -23,12 +24,13 @@ const publications = defineCollection({
 const projects = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
   schema: z.object({
-    title:   z.string(),
-    status:  z.enum(["active", "archived", "wip"]),
-    summary: z.string(),
-    image:   z.string().optional(),          // path under public/, e.g. /projects/ultrack.webp
-    stack:   z.array(z.string()).optional(),
-    link:    z.string().url().optional(),
+    title:        z.string(),
+    status:       z.enum(["active", "archived", "wip"]),
+    summary:      z.string(),
+    image:        z.string().optional(),     // path under public/, e.g. /projects/attachments/x.png
+    stack:        z.array(z.string()).optional(),
+    link:         z.string().url().optional(),
+    collaborator: z.string().optional(),     // AI version, per convention
   }),
 });
 
@@ -36,10 +38,13 @@ const projects = defineCollection({
 const writing = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/writing" }),
   schema: z.object({
-    title:       z.string(),
-    date:        z.date(),
-    tags:        z.array(z.string()).optional(),
-    description: z.string().optional(),        // author-written excerpt
-    collaborator: z.string().optional(),       // AI version, per convention
+    title:        z.string(),
+    date:         z.date(),
+    tags:         z.array(z.string()).optional(),
+    description:  z.string().optional(),     // author-written excerpt
+    collaborator: z.string().optional(),     // AI version, per convention
   }),
 });
+
+// Register all collections so Astro can load them.
+export const collections = { publications, projects, writing };

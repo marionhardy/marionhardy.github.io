@@ -1,4 +1,4 @@
----
+﻿---
 title: Celltracker
 status: archived
 summary: Macrophage tracking from brightfield images
@@ -29,7 +29,7 @@ For this rotation, we would like to change the cell detection method from manual
 
 ### Main figure for co vs tri-culture
 
-![[Pasted image 20260702124615.png]]
+![](/projects/attachments/Pasted%20image%2020260702124615.png)
 ## Challenges
 **For segmentation**
 
@@ -39,7 +39,7 @@ For this rotation, we would like to change the cell detection method from manual
 -  The background in the well can look like it's scratched because the cells are on a microchip-type support, used to do electrotaxis which shows up in the imaging as blurry scratches
 -  The images progressively slide down during imaging (can be corrected but was not adressed in the timespan I spent on this project)
 
-![[Pasted image 20260702124657.png]]
+![](/projects/attachments/Pasted%20image%2020260702124657.png)
 
 1.  Neuronal cell morphology is extremely variable and, even by eye, it is hard to tell which dendrite ends where so training a model is not doable
 2.  In their amoeba-like state, microglial cells can sometimes look like big dendrites
@@ -67,9 +67,9 @@ Abandoned because their test data sets do not include brightfield images without
 
 # Final pipeline
 
-I ended up training my own model using the cellpose gui : Stringer, C., Wang, T., Michaelos, M. et al. Cellpose: a generalist algorithm for cellular segmentation. Nat Methods 18, 100–106 (2021). https://doi.org/10.1038/s41592-020-01018-x
+I ended up training my own model using the cellpose gui : Stringer, C., Wang, T., Michaelos, M. et al. Cellpose: a generalist algorithm for cellular segmentation. Nat Methods 18, 100â€“106 (2021). https://doi.org/10.1038/s41592-020-01018-x
 
-For tracking, I used the trackMate ImageJ plugin : Ershov, D., Phan, M.-S., Pylvänäinen, J. W., Rigaud, S. U., Le Blanc, L., Charles-Orszag, A., … Tinevez, J.-Y. (2022). TrackMate 7: integrating state-of-the-art segmentation algorithms into tracking pipelines. Nature Methods, 19(7), 829–832. doi:10.1038/s41592-022-01507-1
+For tracking, I used the trackMate ImageJ plugin : Ershov, D., Phan, M.-S., PylvÃ¤nÃ¤inen, J. W., Rigaud, S. U., Le Blanc, L., Charles-Orszag, A., â€¦ Tinevez, J.-Y. (2022). TrackMate 7: integrating state-of-the-art segmentation algorithms into tracking pipelines. Nature Methods, 19(7), 829â€“832. doi:10.1038/s41592-022-01507-1
 
 ImageJ integrates both cellpose and trackMate, very conveniently.
 
@@ -91,11 +91,11 @@ Then I made a R script to output various graphs of interest
 
 **Zoomed-in triculture well after segmentation and tracking**
 
-![[triculturetracked.png]]
+![](/projects/attachments/triculturetracked.png)
 
 **Spider plot examples**
 
-![[spiderplot.png]]
+![](/projects/attachments/spiderplot.png)
 
 # Nota Bene
 
@@ -105,6 +105,7 @@ If I don't come back to it and you're trying to do something similar, please con
 Updated on 26th of September 2024: I have improved the pipeline because I am using it on another project (batch processing and improved graphics) -> https://github.com/marionhardy/THP1_tracking
 Additionally, the spider plots order the x axis sequentially and not through time. this is fixed in the new pipeline.
 I would also research the QC you could do on neural networks and be more stringent on what contrast/color input images should be for higher recognition.
+
 
 
 

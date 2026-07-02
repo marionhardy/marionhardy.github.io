@@ -115,8 +115,6 @@ Contains:
 
 This report describes a changing cell population and ties it back to specific transcription factor expression.
 
-![image](figures/interstitial/unnamed-chunk-11-1.png)
-
 ## Interstitial_report7_population_evolution
 
 -    Notes on a meeting with Celina and Hannah and what to change in report 6
@@ -124,8 +122,6 @@ This report describes a changing cell population and ties it back to specific tr
 -    Plotting cell cycle scores, axis scores and apoptosis scores
 
 This is the report that was used to make the powerpoint I added here.
-
-![image](figures/interstitial/umap.png)
 
 ## seurat_all_modifications_reports_1to7.R
 

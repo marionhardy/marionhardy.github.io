@@ -1,7 +1,9 @@
----  
-title: "Ultrack"
-status: "archived"
-summary: "Macrophage tracking from brightfield images."
-stack: ["R", "imageJ"]
-link: "https://github.com/..."
+---
+title: Ultrack
+status: archived
+summary: Macrophage tracking from brightfield images
+link: https://github.com/.
+stack:
+  - "[imageJ]"
+  - "[R]"
 ---

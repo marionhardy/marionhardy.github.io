@@ -8,17 +8,17 @@ projects.sort((a, b) => a.data.title.localeCompare(b.data.title));
 <Base title="mhy — projects">
   <h1>Projects</h1>
 
-  <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1ch; margin-top:1rem;">
+<div style="display:flex; flex-direction:column; gap:1ch; margin-top:1rem;">
     {projects.map((p) => (
       <a href={`/projects/${p.id}`}
-         style="border:var(--border-thickness) solid var(--fg); text-decoration:none; color:var(--fg); display:flex; flex-direction:column;">
-        <div style="aspect-ratio:16/10; background:var(--hover-bg); overflow:hidden;">
+         style="border:var(--border-thickness) solid var(--fg); text-decoration:none; color:var(--fg); display:flex; min-height:140px;">
+        <div style="flex:0 0 240px; background:var(--hover-bg); overflow:hidden;">
           {p.data.image && <img src={p.data.image} alt={p.data.title} style="width:100%; height:100%; object-fit:cover; display:block;" />}
         </div>
-        <div style="padding:0.6rem 1ch;">
+        <div style="padding:0.8rem 1ch; flex:1;">
           <strong>{p.data.title}</strong>
           <span style="font-size:0.65rem; color:var(--fg-alt); border:1px solid var(--fg-alt); padding:0 0.4ch; margin-left:0.5ch;">{p.data.status}</span>
-          <p style="color:var(--fg-alt); font-size:0.8rem; margin:0.4rem 0 0;">{p.data.summary}</p>
+          <p style="color:var(--fg-alt); font-size:0.85rem; margin:0.5rem 0 0;">{p.data.summary}</p>
         </div>
       </a>
     ))}

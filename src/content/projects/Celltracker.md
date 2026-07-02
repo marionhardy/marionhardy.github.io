@@ -6,7 +6,7 @@ link: https://github.com/marionhardy/celltracker
 stack:
   - "[imageJ]"
   - "[R]"
-image: '"/projects/attachments/tricultruetracked.png"'
+image: '"/projects/attachments/triculturetracked.png"'
 ---
 # Tracking microglial cells in brightfield rat cortical tricultures
 ## Introduction

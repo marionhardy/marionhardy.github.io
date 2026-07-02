@@ -1,0 +1,31 @@
+---
+// Detail page per project. getStaticPaths tells Astro which slugs to build.
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((p) => ({
+    params: { slug: p.id },   // filename (no .md) → /projects/<slug>
+    props: { project: p },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);   // compiled Markdown body → component
+---
+
+<Base title={`mhy — ${project.data.title}`}>
+  <a href="/projects" style="color:var(--fg-alt); font-size:0.85rem;">← projects</a>
+
+  <h1 style="margin:0.4rem 0 0;">
+    {project.data.title}
+    <span style="font-size:0.7rem; color:var(--fg-alt); border:1px solid var(--fg-alt); padding:0 0.5ch; margin-left:1ch;">{project.data.status}</span>
+  </h1>
+
+  {project.data.stack && <p style="color:var(--fg-alt); font-size:0.85rem;">{project.data.stack.join(" · ")}</p>}
+  {project.data.link && <p><a href={project.data.link} style="color:var(--accent);">→ repo</a></p>}
+
+  <!-- The Markdown body: headings, links, images, wikilinks all resolved -->
+  <article class="prose"><Content /></article>
+</Base>

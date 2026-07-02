@@ -92,4 +92,4 @@ git commit -m "Publish content ($stamp)"
 Write-Host "Pushing..." -ForegroundColor Cyan
 git push
 
-Write-Host "`nDone. GitHub Actions is rebuilding — live in ~2 min." -ForegroundColor Green
+Write-Host "`nDone. GitHub Actions is rebuilding - live in ~2 min." -ForegroundColor Green

@@ -7,15 +7,20 @@ projects.sort((a, b) => a.data.title.localeCompare(b.data.title));
 
 <Base title="mhy — projects">
   <h1>Projects</h1>
-  {projects.map((proj) => (
-    <article style="border-bottom: 1px solid var(--fg-alt); padding: 1rem 0;">
-      <h2 style="margin: 0;">
-        {proj.data.title}
-        <span style="font-size: 0.7rem; color: var(--fg-alt); border: 1px solid var(--fg-alt); padding: 0 0.5ch; margin-left: 1ch;">{proj.data.status}</span>
-      </h2>
-      <p style="color: var(--fg-alt); margin: 0.4rem 0;">{proj.data.summary}</p>
-      {proj.data.stack && <p style="font-size: 0.85rem;">{proj.data.stack.join(" · ")}</p>}
-      {proj.data.link && <a href={proj.data.link} style="color: var(--accent);">→ repo</a>}
-    </article>
-  ))}
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1ch; margin-top:1rem;">
+    {projects.map((p) => (
+      <a href={`/projects/${p.id}`}
+         style="border:var(--border-thickness) solid var(--fg); text-decoration:none; color:var(--fg); display:flex; flex-direction:column;">
+        <div style="aspect-ratio:16/10; background:var(--hover-bg); overflow:hidden;">
+          {p.data.image && <img src={p.data.image} alt={p.data.title} style="width:100%; height:100%; object-fit:cover; display:block;" />}
+        </div>
+        <div style="padding:0.6rem 1ch;">
+          <strong>{p.data.title}</strong>
+          <span style="font-size:0.65rem; color:var(--fg-alt); border:1px solid var(--fg-alt); padding:0 0.4ch; margin-left:0.5ch;">{p.data.status}</span>
+          <p style="color:var(--fg-alt); font-size:0.8rem; margin:0.4rem 0 0;">{p.data.summary}</p>
+        </div>
+      </a>
+    ))}
+  </div>
 </Base>

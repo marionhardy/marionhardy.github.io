@@ -57,3 +57,11 @@ body {
   /* smooth the colour change when toggling */
   transition: background 0.2s ease, color 0.2s ease;
 }
+
+
+/* Markdown body (detail pages) */
+.prose { line-height: var(--line); }
+.prose h2, .prose h3 { margin-top: 1.5rem; }
+.prose img { max-width: 100%; height: auto; }
+.prose a { color: var(--accent); }
+

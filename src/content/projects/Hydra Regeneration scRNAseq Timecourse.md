@@ -5,7 +5,7 @@ summary: This project took place during a rotation at the beginning of my PhD wh
 link: https://github.com/marionhardy/hydra-regen
 stack:
   - "[R]"
-image:
+image: /projects/attachments/triculturetracked.png
 ---
 # Interstitial cells transcription factors in *Hydra Vulgaris* regeneration over 96 hours
 

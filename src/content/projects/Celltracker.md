@@ -29,7 +29,7 @@ For this rotation, we would like to change the cell detection method from manual
 
 ### Main figure for co vs tri-culture
 
-![[Pasted image 20260702123017.png]]
+![[Pasted image 20260702124615.png]]
 ## Challenges
 **For segmentation**
 
@@ -39,7 +39,7 @@ For this rotation, we would like to change the cell detection method from manual
 -  The background in the well can look like it's scratched because the cells are on a microchip-type support, used to do electrotaxis which shows up in the imaging as blurry scratches
 -  The images progressively slide down during imaging (can be corrected but was not adressed in the timespan I spent on this project)
 
-![[Pasted image 20260702123410.png]]
+![[Pasted image 20260702124657.png]]
 
 1.  Neuronal cell morphology is extremely variable and, even by eye, it is hard to tell which dendrite ends where so training a model is not doable
 2.  In their amoeba-like state, microglial cells can sometimes look like big dendrites
@@ -91,12 +91,12 @@ Then I made a R script to output various graphs of interest
 
 **Zoomed-in triculture well after segmentation and tracking**
 
-![[spiderplot.png]]
+![[triculturetracked.png]]
 
 **Spider plot examples**
 
+![[spiderplot.png]]
 
-![[triculturetracked.png]]
 # Nota Bene
 
 This README doc is missing details about parameters and how to install the various softwares used as well as the model I used.

@@ -24,9 +24,10 @@ const projects = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
   schema: z.object({
     title:   z.string(),
-    status:  z.enum(["active", "archived", "wip"]),  // only these 3 allowed
+    status:  z.enum(["active", "archived", "wip"]),
     summary: z.string(),
-    stack:   z.array(z.string()).optional(),  // a list of strings
+    image:   z.string().optional(),          // path under public/, e.g. /projects/ultrack.webp
+    stack:   z.array(z.string()).optional(),
     link:    z.string().url().optional(),
   }),
 });
@@ -35,11 +36,10 @@ const projects = defineCollection({
 const writing = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/writing" }),
   schema: z.object({
-    title: z.string(),
-    date:  z.date(),                    // a real date, parsed & validated
-    tags:  z.array(z.string()).optional(),
+    title:       z.string(),
+    date:        z.date(),
+    tags:        z.array(z.string()).optional(),
+    description: z.string().optional(),        // author-written excerpt
+    collaborator: z.string().optional(),       // AI version, per convention
   }),
 });
-
-// Register all collections so Astro knows about them.
-export const collections = { publications, projects, writing };

@@ -1,19 +1,41 @@
 ---
 import Base from "../layouts/Base.astro";
 import { getCollection } from "astro:content";
+
 const posts = await getCollection("writing");
 posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Excerpt: description if set, else first ~30 words of body (markdown stripped).
+function excerpt(p) {
+  if (p.data.description) return p.data.description;
+  const plain = p.body
+    .replace(/^---[\s\S]*?---/, "")        // frontmatter (safety)
+    .replace(/!\[.*?\]\(.*?\)/g, "")       // images
+    .replace(/\[([^\]]+)\]\(.*?\)/g, "$1") // links -> text
+    .replace(/[#>*`_~-]/g, "")             // md punctuation
+    .replace(/\s+/g, " ").trim();
+  const words = plain.split(" ").slice(0, 30);
+  return words.join(" ") + (plain.split(" ").length > 30 ? "…" : "");
+}
 ---
 
 <Base title="mhy — writing">
   <h1>Writing</h1>
-  {posts.map((post) => (
-    <article style="padding: 0.8rem 0; border-bottom: 1px solid var(--fg-alt);">
-      <h2 style="margin: 0; font-size: 1rem;">{post.data.title}</h2>
-      <time style="color: var(--fg-alt); font-size: 0.85rem;">
-        {post.data.date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
-      </time>
-      {post.data.tags && <div style="font-size: 0.8rem; color: var(--fg-alt);">{post.data.tags.join(", ")}</div>}
-    </article>
-  ))}
+
+  <div style="display:flex; flex-direction:column; gap:1.25rem; margin-top:1rem;">
+    {posts.map((p) => (
+      <a href={`/writing/${p.id}`} style="text-decoration:none; color:var(--fg); display:block;">
+        <div style="display:flex; gap:1.5ch; align-items:baseline;">
+          <time style="color:var(--fg-alt); font-size:0.8rem; flex:0 0 6.5rem;">
+            {p.data.date.toLocaleDateString("en-US", { year:"numeric", month:"short", day:"numeric" })}
+          </time>
+          <span class="post-title" style="flex:1; border-bottom:1px solid transparent;">{p.data.title}</span>
+        </div>
+        <p style="color:var(--fg-alt); font-size:0.85rem; margin:0.25rem 0 0 8rem; line-height:1.5;">
+          {excerpt(p)}
+          {p.data.tags && <span style="font-size:0.7rem; margin-left:1ch;">· {p.data.tags.join(", ")}</span>}
+        </p>
+      </a>
+    ))}
+  </div>
 </Base>

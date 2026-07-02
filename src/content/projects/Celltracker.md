@@ -14,6 +14,7 @@ image: /projects/attachments/triculturetracked.png
 These brightfield images have been obtained from imaging rat cortical cell tricultures with the method developed in this lab.
 
 The paper describing this method can be found here: **Goshi, N., Morgan, R.K., Lein, P.J. et al. A primary neural cell culture model to study neuron, astrocyte, and microglia interactions in neuroinflammation. J Neuroinflammation 17, 155 (2020). https://doi.org/10.1186/s12974-020-01819-z**
+The paper describing this method can be found here: **Goshi, N., Morgan, R.K., Lein, P.J. et al. A primary neural cell culture model to study neuron, astrocyte, and microglia interactions in neuroinflammation. J Neuroinflammation 17, 155 (2020). https://doi.org/10.1186/s12974-020-01819-z**
 
 Broadly, these tricultures are composed of 
 -  Neurons

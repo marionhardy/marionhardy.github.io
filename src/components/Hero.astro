@@ -8,28 +8,16 @@ const W = 726, H = 420; // hero pixel dimensions — set to your image's later
 
 const hotspots = [
   {
-    id: "m1",
-    label: "M1 — pro-inflammatory",
-    href: "/writing/first-post",
-    path: "M180,140 Q150,110 170,90 Q210,70 250,95 Q280,130 255,170 Q220,200 185,180 Z",
+    id: "c1",
+    label: "Cell 1",
+    path: "M...",                                  // Inkscape d-string, 700x420
     media: [
-      { type: "video", label: "live",     src: "/cells/m1/live.mp4" },
-      { type: "image", label: "IF merge", src: "/cells/m1/if-merge.jpg" },
-      { type: "image", label: "DAPI",     src: "/cells/m1/dapi.jpg" },
-      { type: "image", label: "iNOS",     src: "/cells/m1/inos.jpg" },
+      { type: "image", label: "CD163", src: "/hero/CD163-field.jpg" },
+      { type: "image", label: "DAPI",  src: "/hero/DAPI-field.jpg" },
+      // append markers as exported
     ],
   },
-  {
-    id: "m2",
-    label: "M2 — tissue repair",
-    href: "/writing/first-post",
-    path: "M420,260 Q390,225 415,200 Q460,180 500,210 Q525,250 500,290 Q455,320 425,295 Z",
-    media: [
-      { type: "video", label: "live",     src: "/cells/m2/live.mp4" },
-      { type: "image", label: "IF merge", src: "/cells/m2/if-merge.jpg" },
-      { type: "image", label: "CD206",    src: "/cells/m2/cd206.jpg" },
-    ],
-  },
+  // additional cells
 ];
 ---
 
@@ -68,7 +56,7 @@ const hotspots = [
 <style>
   .hero { display:flex; gap:2ch; flex-wrap:wrap; align-items:flex-start;
           border: var(--border-thickness) solid var(--fg); margin:1.5rem 0; padding:1ch; }
-
+  .base-img { background: url('/hero/composite-field.jpg') center/cover; }
   /* fixed-size stacking context */
   .stage { position:relative; flex:none; }
   .base-img { position:absolute; inset:0; background:var(--hover-bg);

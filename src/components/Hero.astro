@@ -1,46 +1,49 @@
 ---
-// Hero.astro — media-in-mask hotspots.
-// Each cell's traced `path` is used by: SVG outline, CSS clip-path, and JS lookup.
-// Hero is a FIXED pixel box so SVG coords and CSS clip-path coords agree.
+// Hero.astro — media-in-mask hotspots over a registered IF field.
+// Each cell's traced `path` drives BOTH the SVG outline and the CSS clip-path.
+// FIXED 700x420 box so SVG viewBox and clip-path coords share one space
+// (matches the FIJI export size / Inkscape canvas). Hotspots are
+// non-navigating: hover reveals a random marker inside the cell mask.
 import "../styles/tokens.css";
 
-const W = 726, H = 420; // hero pixel dimensions — set to your image's later
+const W = 700, H = 420;
 
 const hotspots = [
   {
-    id: "c1",
-    label: "Cell 1",
-    path: "M...",                                  // Inkscape d-string, 700x420
+    id: "m2",
+    label: "M2 - IL4 + IL13",
+    // TODO: replace with Inkscape d-string traced on a 700x420 canvas
+    path: "M120,180 Q100,140 140,120 Q200,110 230,150 Q250,200 210,230 Q160,240 120,180 Z",
     media: [
       { type: "image", label: "CD163", src: "/hero/CD163-field.jpg" },
       { type: "image", label: "DAPI",  src: "/hero/DAPI-field.jpg" },
-      // append markers as exported
+      // append markers as exported: { type:"image", label:"X", src:"/hero/X-field.jpg" }
     ],
   },
-  // additional cells
+  // additional cells: same shape, own path + media set
 ];
 ---
 
 <div class="hero">
   <div class="stage" style={`width:${W}px; height:${H}px;`}>
 
-    <!-- LAYER 1: base image (placeholder) -->
+    <!-- LAYER 1: base composite field (always visible) -->
     <div class="base-img"></div>
 
-    <!-- LAYER 2: one clipped media container per cell, hidden until hover -->
+    <!-- LAYER 2: clipped media container per cell, hidden until hover -->
     {hotspots.map((h) => (
       <div class="cell-media" id={`media-${h.id}`}
            style={`clip-path: path('${h.path}'); -webkit-clip-path: path('${h.path}');`}>
       </div>
     ))}
 
-    <!-- LAYER 3: SVG outlines (the glow/border) + click targets -->
+    <!-- LAYER 3: SVG outlines (glow/border) + hover targets. Non-navigating. -->
     <svg class="outlines" viewBox={`0 0 ${W} ${H}`} xmlns="http://www.w3.org/2000/svg">
       {hotspots.map((h) => (
-        <a href={h.href} class="hotspot"
+        <g class="hotspot"
            data-id={h.id} data-label={h.label} data-media={JSON.stringify(h.media)}>
           <path d={h.path} class="outline-shape" />
-        </a>
+        </g>
       ))}
     </svg>
   </div>
@@ -48,54 +51,55 @@ const hotspots = [
   <!-- LAYER 4: text-only side panel -->
   <aside class="hero-panel">
     <p class="panel-hint">// hover a cell</p>
-    <p id="panel-label" class="panel-label">Macrophage field</p>
-    <p id="panel-blurb" class="panel-blurb">Hover a cell to inspect · click a marker to swap.</p>
+    <p id="panel-label" class="panel-label">Macrophage type</p>
+    <p id="panel-blurb" class="panel-blurb">Hover a cell to reveal a stain.</p>
   </aside>
 </div>
 
 <style>
   .hero { display:flex; gap:2ch; flex-wrap:wrap; align-items:flex-start;
           border: var(--border-thickness) solid var(--fg); margin:1.5rem 0; padding:1ch; }
-  .base-img { background: url('/hero/composite-field.jpg') center/cover; }
+
   /* fixed-size stacking context */
   .stage { position:relative; flex:none; }
-  .base-img { position:absolute; inset:0; background:var(--hover-bg);
-              /* placeholder fill; real: background:url('/macrophage.jpg') center/cover; */ }
 
-  /* clipped media — fills the stage, but clip-path shows only the cell shape */
+  /* base composite fills the stage */
+.base-img { position:absolute; inset:0;
+            background:url('/hero/composite-field.jpg') no-repeat top left;
+            background-size:100% 100%; }
+
+  /* clipped media — fills stage, clip-path shows only the cell shape */
   .cell-media { position:absolute; inset:0; opacity:0; transition:opacity .25s ease;
                 pointer-events:none; }
   .cell-media.show { opacity:1; }
   .cell-media img, .cell-media video { width:100%; height:100%; object-fit:cover; display:block; }
 
-  /* SVG outline layer sits on top, but only the paths catch the mouse */
+  /* SVG outline layer on top; only the paths catch the mouse */
   .outlines { position:absolute; inset:0; width:100%; height:100%; }
   .outline-shape {
     fill: transparent; stroke: var(--accent); stroke-width:2; opacity:0.4;
     transition: opacity .2s, stroke-width .2s, filter .2s; cursor:pointer;
   }
-  /* glow on hover-in; settles to thin border via the .filled class JS adds */
+  /* glow on hover-in; settles to thin border once media fills (.filled) */
   .hotspot:hover .outline-shape {
     opacity:1; stroke-width:3; filter: drop-shadow(0 0 6px var(--accent));
   }
   .hotspot.filled .outline-shape {
-    stroke-width:1.5; filter:none; opacity:0.9;  /* settled thin border */
+    stroke-width:1.5; filter:none; opacity:0.9;
   }
 
   .hero-panel { flex:1; min-width:200px; padding:0.5rem 1ch; }
-  .panel-hint { color:var(--fg-alt); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; margin:0 0 0.5rem; }
+  .panel-hint  { color:var(--fg-alt); font-size:0.7rem; text-transform:uppercase;
+                 letter-spacing:0.06em; margin:0 0 0.5rem; }
   .panel-label { font-weight:500; margin:0 0 0.4rem; }
   .panel-blurb { color:var(--fg-alt); font-size:0.85rem; margin:0 0 0.6rem; }
-  .panel-thumbs { display:flex; gap:0.5ch; flex-wrap:wrap; }
-  .thumb { font-size:0.7rem; padding:0.1rem 0.6ch; cursor:pointer; font-family:inherit;
-           border:1px solid var(--fg-alt); color:var(--fg-alt); background:transparent; }
-  .thumb.active { border-color:var(--accent); color:var(--accent); }
 </style>
 
 <script>
   const label = document.getElementById("panel-label");
   const blurb = document.getElementById("panel-blurb");
 
+  // Build an <img> or <video> DOM node for a media item (no innerHTML).
   function makeMedia(item) {
     if (item.type === "video") {
       const v = document.createElement("video");
@@ -108,6 +112,7 @@ const hotspots = [
     return img;
   }
 
+  // On hover: reveal a random marker for this cell inside its mask.
   function activateCell(hotspot) {
     let media;
     try { media = JSON.parse(hotspot.getAttribute("data-media")); } catch { return; }
@@ -115,8 +120,6 @@ const hotspots = [
 
     const id = hotspot.getAttribute("data-id");
     const container = document.getElementById("media-" + id);
-
-    // pick a random media item from this cell's set
     const pick = media[Math.floor(Math.random() * media.length)];
 
     container.replaceChildren(makeMedia(pick));
@@ -124,14 +127,15 @@ const hotspots = [
     hotspot.classList.add("filled");
 
     label.textContent = hotspot.getAttribute("data-label");
-    blurb.textContent = pick.label;   // name the marker/video currently shown
+    blurb.textContent = pick.label;
   }
 
+  // On leave: clear the mask (also stops any video).
   function clearCell(hotspot) {
     const id = hotspot.getAttribute("data-id");
     const container = document.getElementById("media-" + id);
     container.classList.remove("show");
-    container.replaceChildren();       // stop video, free it
+    container.replaceChildren();
     hotspot.classList.remove("filled");
   }
 

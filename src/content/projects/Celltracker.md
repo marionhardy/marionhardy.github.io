@@ -8,10 +8,10 @@ stack:
   - "[R]"
 image: /projects/attachments/triculturetracked.png
 ---
-# Tracking microglial cells in brightfield rat cortical tricultures
+# Tracking microglial cells in bright field rat cortical tricultures
 ## Introduction
 
-These brightfield images have been obtained from imaging rat cortical cell tricultures with the method developed in the [Seker lab](https://www.ece.ucdavis.edu/~eseker/), where I was rotating.
+These bright field images have been obtained from imaging rat cortical cell tricultures with the method developed in the [Seker lab](https://www.ece.ucdavis.edu/~eseker/), where I was rotating.
 
 The paper describing this culturing can be found here: **Goshi, N., Morgan, R.K., Lein, P.J. et al. A primary neural cell culture model to study neuron, astrocyte, and microglia interactions in neuroinflammation. J Neuroinflammation 17, 155 (2020). https://doi.org/10.1186/s12974-020-01819-z**
 

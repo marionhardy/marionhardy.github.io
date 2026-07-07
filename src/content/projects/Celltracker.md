@@ -11,10 +11,9 @@ image: /projects/attachments/triculturetracked.png
 # Tracking microglial cells in brightfield rat cortical tricultures
 ## Introduction
 
-These brightfield images have been obtained from imaging rat cortical cell tricultures with the method developed in this lab.
+These brightfield images have been obtained from imaging rat cortical cell tricultures with the method developed in the [Seker lab](https://www.ece.ucdavis.edu/~eseker/), where I was rotating.
 
-The paper describing this method can be found here: **Goshi, N., Morgan, R.K., Lein, P.J. et al. A primary neural cell culture model to study neuron, astrocyte, and microglia interactions in neuroinflammation. J Neuroinflammation 17, 155 (2020). https://doi.org/10.1186/s12974-020-01819-z**
-The paper describing this method can be found here: **Goshi, N., Morgan, R.K., Lein, P.J. et al. A primary neural cell culture model to study neuron, astrocyte, and microglia interactions in neuroinflammation. J Neuroinflammation 17, 155 (2020). https://doi.org/10.1186/s12974-020-01819-z**
+The paper describing this culturing can be found here: **Goshi, N., Morgan, R.K., Lein, P.J. et al. A primary neural cell culture model to study neuron, astrocyte, and microglia interactions in neuroinflammation. J Neuroinflammation 17, 155 (2020). https://doi.org/10.1186/s12974-020-01819-z**
 
 Broadly, these tricultures are composed of 
 -  Neurons
@@ -26,8 +25,7 @@ Tricultures of rat neurons, astrocytes and microglia allow for the study of cros
 
 In their amoeboid shapes, these cells can be seen to move in the tricultures the Seker lab is using as models to explore neuroinflammation, neurodegeneration and other disorders that may occur in the CNS. However, the current method to track these moving cells involves identifying and tracing them by hand in each video taken with the microscope to generate tracks with a ImageJ plugin.
 
-For this rotation, we would like to change the cell detection method from manual to automated. We are planning to train and use a neural network to recognize our cells. Additionally, we would like to use Cellprofiler to track these detected cells and develop a script that could take the generated track tables and output a few summary graphs containing the number of cells tracked, their phenotype and their speeds.
-
+For this rotation, I was tasked with changing the cell detection method from manual to automated. I thought of using an LLM for cell segmentation. Additionally, I wanted to use Cellprofiler to track these detected cells and develop a script that could take the generated track tables and output a few summary graphs containing the number of cells tracked, their phenotype and any path-derived feature.
 
 ### Main figure for co vs tri-culture
 
@@ -35,17 +33,16 @@ For this rotation, we would like to change the cell detection method from manual
 ## Challenges
 **For segmentation**
 
-1.  The supplied data are brighfield images with no markers to help segmentation or cell type identification (example below)
--  Common segmentation methods will not work (thresholding, watershed...)
--  The cells are crowded
--  The background in the well can look like it's scratched because the cells are on a microchip-type support, used to do electrotaxis which shows up in the imaging as blurry scratches
--  The images progressively slide down during imaging (can be corrected but was not adressed in the timespan I spent on this project)
+1.  The supplied data are brightfield images with no markers to help segmentation or cell type identification (example below)
+	-  Common segmentation methods will not work (thresholding, watershed...)
+	-  The cells are crowded
+	-  The background in the well can look like it's scratched because the cells are on a microchip-type support, used to do electrotaxis which shows up in the imaging as blurry scratches
+	-  The images progressively slide down during imaging (can be corrected but was not adressed in the timespan I spent on this project)
 
 ![](/projects/attachments/Pasted%20image%2020260702124657.png)
 
-1.  Neuronal cell morphology is extremely variable and, even by eye, it is hard to tell which dendrite ends where so training a model is not doable
+1.  Neuronal cell morphology is extremely variable and, even by eye, it is hard to tell which dendrite ends where so training a model on cell projections is not doable
 2.  In their amoeba-like state, microglial cells can sometimes look like big dendrites
-3.  Cells are unhappy in electrotaxis conditions, you can see them changing phenotype
 
 **For tracking**
 
@@ -55,9 +52,9 @@ For this rotation, we would like to change the cell detection method from manual
 ## Strengths
 
 1.  None of these cells divide, I don't have to worry about lineage tracing
-2.  The only cells that move a certain distance **can only** be microglia, I can do filtering based on track length over the 50 frames
+2.  The only cells that move a certain distance **should only be microglia**, I can do filtering based on track length over the 50 frames
 
-# Avenues explored and subsequently abandonned
+# Avenues explored and subsequently abandoned
 
 -  celltracker (used inside of CellProfiler): Hu T, Xu S, Wei L, Zhang X, Wang X. CellTracker: an automated toolbox for single-cell segmentation and tracking of time-lapse microscopy images. Bioinformatics. 2021 Apr 19;37(2):285-287. doi: 10.1093/bioinformatics/btaa1106. PMID: 33416830.
 
@@ -97,7 +94,7 @@ Then I made a R script to output various graphs of interest
 
 **Spider plot examples**
 
-![](/projects/attachments/spiderplot.png)
+[[tb updated]]
 
 # Nota Bene
 

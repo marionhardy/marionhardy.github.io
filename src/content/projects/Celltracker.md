@@ -88,13 +88,13 @@ Then I made a R script to output various graphs of interest
 -  Spider plot
 -  Statistical analysis on multiple parameters such as : Average speed, directionality, distance...
 
-**Zoomed-in triculture well after segmentation and tracking**
+**Zoomed-in triculture well during segmentation and tracking**
 
-![](/projects/attachments/triculturetracked.png)
+![](/projects/attachments/TrackMatecaptureofPoint_06.gif)
 
 **Spider plot examples**
 
-[[tb updated]]
+\[\[tb updated]]
 
 # Nota Bene
 

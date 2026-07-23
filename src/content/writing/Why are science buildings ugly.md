@@ -4,11 +4,9 @@ date: 2026-06-30
 ---
 And by ugly, I mean cold, brutalist architecture.                                                                                                                                                                                                                                                                                                                                                                                                             
 
-Stained ceilings, leaky roofs and roughly poured exteriors have accompanied me throughout my scientific journey. Why is it that most science buildings inherit  troves of bulky textured concrete or sleek metal-glass open spaces? 
+Stained ceilings, leaky roofs and roughly poured exteriors have accompanied me throughout my scientific journey. Why is it that most science buildings inherit bulky concrete or sleek metal-glass open spaces? 
 
-Surely my experience is universal and those questions are worth asking.
-
-In any case, here are some moments I thought were worth capturing.
+I don't have an answer, but I have pictures.
 
 ![](/writing/attachments/IMG_20181115_123015__01.jpg)
 

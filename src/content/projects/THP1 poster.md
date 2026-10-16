@@ -54,7 +54,8 @@ status: wip
 <tr><td>M1</td><td><img src="/projects/attachments/Pasted%20image%2020260811130520.png" alt="M1 traces 0–24 h" width="300"></td><td></td></tr>
 </tbody>
 </table>
-### 2 · Dynamic clusters vs endpoint profiles 
+
+<h3>2 · Dynamic clusters vs endpoint profiles</h3>
 
 ![](/projects/attachments/2026-10-14__s6b_cluster-correspondence_first.png)
 ### 3 · The early response to glucose re-feeding (exploratory)
@@ -67,7 +68,7 @@ status: wip
 
 ### 5 · Variance explained per stained marker
 
-![](/projects/attachments/2026-10-13__q3-poster-partition_first.pdf)
+![](/projects/attachments/2026-10-13__q3-poster-partition_first.png)
 
 ## References
 

@@ -8,7 +8,7 @@ status: wip
 
 ## The poster
 
-[Download the poster (PDF)](/projects/attachments/thp1-poster.pdf)
+<a href="/projects/attachments/thp1-poster.pdf" download style="display:inline-block;padding:.7rem 1.3rem;border-radius:12px;background:#022851;color:#FFBF00;font-weight:700;text-decoration:none;border:1px solid rgba(255,191,0,.4)">⬇ Download the poster (PDF)</a>
 
 ![](/projects/attachments/thp1-poster-preview.png)
 

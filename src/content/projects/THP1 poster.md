@@ -26,29 +26,34 @@ status: wip
 
 *Live imaging of HYlight activity after glucose IL4 + IL13 treatment.*
 
-|                | Example live-to-fixed images.             |
-| -------------- | ----------------------------------------- |
-| M2a THP1 cells | ![](/projects/attachments/Pasted%20image%2020261015162920.png\) |
-| IL1β (fixed)   | ![](/projects/attachments/Pasted%20image%2020261015163029.png\) |
+<table>
+<thead><tr><th></th><th>Example live-to-fixed images</th></tr></thead>
+<tbody>
+<tr><td>M2a THP1 cells</td><td><img src="/projects/attachments/Pasted%20image%2020261015162920.png" alt="M2a THP-1 cells, live" width="495"></td></tr>
+<tr><td>IL-1β (fixed)</td><td><img src="/projects/attachments/Pasted%20image%2020261015163029.png" alt="Same field, IL-1β CyCIF stain" width="495"></td></tr>
+</tbody>
+</table>
 
 ## Figures
 
 <!-- To add a figure: put the PNG/SVG in Published/projects/Attachments, then copy a block below.
 ### Figure title
-![](/projects/attachments/file-name.png)
+<img src="/projects/attachments/file-name.png" alt="short description" style="max-width:100%">
 *One-sentence legend.*
 -->
 
 ### 1 · What individual cell traces look like
 
-|     | 0-24h                                     | 24-48h                                    |
-| --- | ----------------------------------------- | ----------------------------------------- |
-| M2a | ![](/projects/attachments/Pasted%20image%2020260811130010.png\) | ![](/projects/attachments/Pasted%20image%2020260811130044.png\) |
-| M2b | ![](/projects/attachments/Pasted%20image%2020260811130129.png\) | ![](/projects/attachments/Pasted%20image%2020260811130152.png\) |
-| M2c | ![](/projects/attachments/Pasted%20image%2020260811125717.png\) | ![](/projects/attachments/Pasted%20image%2020260811125758.png\) |
-| M2d | ![](/projects/attachments/Pasted%20image%2020260811125907.png\) | ![](/projects/attachments/Pasted%20image%2020260811125927.png\) |
-| M1  | ![](/projects/attachments/Pasted%20image%2020260811130520.png\) |                                           |
-
+<table>
+<thead><tr><th></th><th>0–24 h</th><th>24–48 h</th></tr></thead>
+<tbody>
+<tr><td>M2a</td><td><img src="/projects/attachments/Pasted%20image%2020260811130010.png" alt="M2a traces 0–24 h" width="300"></td><td><img src="/projects/attachments/Pasted%20image%2020260811130044.png" alt="M2a traces 24–48 h" width="300"></td></tr>
+<tr><td>M2b</td><td><img src="/projects/attachments/Pasted%20image%2020260811130129.png" alt="M2b traces 0–24 h" width="300"></td><td><img src="/projects/attachments/Pasted%20image%2020260811130152.png" alt="M2b traces 24–48 h" width="300"></td></tr>
+<tr><td>M2c</td><td><img src="/projects/attachments/Pasted%20image%2020260811125717.png" alt="M2c traces 0–24 h" width="300"></td><td><img src="/projects/attachments/Pasted%20image%2020260811125758.png" alt="M2c traces 24–48 h" width="300"></td></tr>
+<tr><td>M2d</td><td><img src="/projects/attachments/Pasted%20image%2020260811125907.png" alt="M2d traces 0–24 h" width="300"></td><td><img src="/projects/attachments/Pasted%20image%2020260811125927.png" alt="M2d traces 24–48 h" width="300"></td></tr>
+<tr><td>M1</td><td><img src="/projects/attachments/Pasted%20image%2020260811130520.png" alt="M1 traces 0–24 h" width="300"></td><td></td></tr>
+</tbody>
+</table>
 ### 2 · Dynamic clusters vs endpoint profiles 
 
 ![](/projects/attachments/2026-10-14__s6b_cluster-correspondence_first.png)
